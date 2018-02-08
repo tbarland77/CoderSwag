@@ -2,28 +2,31 @@ package com.programmerz.timothy.coderswag.controller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.widget.Toast
+import android.support.v7.widget.LinearLayoutManager
 import com.programmerz.timothy.coderswag.R
 import com.programmerz.timothy.coderswag.adapters.CategoryAdapter
+import com.programmerz.timothy.coderswag.adapters.CategoryRecycleAdapter
 import com.programmerz.timothy.coderswag.services.DataService
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter: CategoryAdapter
+    lateinit var adapter: CategoryRecycleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = CategoryAdapter(this, DataService.categories)
-
+        adapter = CategoryRecycleAdapter(this, DataService.categories)
         categoryListView.adapter = adapter
 
-        categoryListView.setOnItemClickListener { adapterView, view, i, l ->
-            val category = DataService.categories[i]
-            Toast.makeText(this, "You clicked on the ${category.title} cell", Toast.LENGTH_SHORT).show()
-        }
+        val layoutManager = LinearLayoutManager(this)
+        categoryListView.layoutManager = layoutManager
+        categoryListView.setHasFixedSize(true)
+
+//        categoryListView.setOnItemClickListener { adapterView, view, i, l ->
+//            val category = DataService.categories[i]
+//            Toast.makeText(this, "You clicked on the ${category.title} cell", Toast.LENGTH_SHORT).show()
+//        }
     }
 }
